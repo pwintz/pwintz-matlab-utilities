@@ -7,5 +7,5 @@ function plotLinearVectorField(A, varargin)
         reshape(x2, 1, [])];
   p1 = reshape(p(1,:), size(x1));
   p2 = reshape(p(2,:), size(x1));
-  quiver(x1,x2,p1,p2, varargin{:})
+  quiver(x1,x2,p1,p2, varargin{:});
 end

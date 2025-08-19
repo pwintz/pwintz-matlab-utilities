@@ -7,7 +7,7 @@ function fig = namedFigure(name)
 
     % Function signature should be like: myFunction(<positional arguments>, options)
     arguments
-        name (1, 1) string
+        name (1, 1) string;
     end
     
     % Search for an existing figure with the specified name
@@ -16,7 +16,7 @@ function fig = namedFigure(name)
     if isempty(fig)
         % If the figure does not exist, create a new one
         fig = figure();
-        set(fig, 'Name', name, NumberTitle='off')
+        set(fig, 'Name', name, NumberTitle='off');
     else
         % If the figure exists, make it the current figure
         figure(fig);

@@ -35,7 +35,7 @@ function arrangefigures(varargin)
 % (c) M. van Dijk
 
 if nargin > 3
-    warning('Incorrect number of input arguments. Leaving figures unchanged.')
+    warning('Incorrect number of input arguments. Leaving figures unchanged.');
     return
 elseif nargin == 0
     monitor = 1;
@@ -89,18 +89,18 @@ end
 
 % check if monitor-array exceeds number of monitors
 if min(monitor) > NMonitors
-    error(['Can''t find assigned monitor: NMonitors = ' num2str(NMonitors) ', Set display monitor = [' num2str((monitor)) ']'])
+    error(['Can''t find assigned monitor: NMonitors = ' num2str(NMonitors) ', Set display monitor = [' num2str((monitor)) ']']);
 end
 if min(monitor) < 1
-    warning(['Can''t find assigned monitor: NMonitors = ' num2str(NMonitors) ', Set display monitor = [' num2str((monitor)) ']. Skipping monitors < 0'])
+    warning(['Can''t find assigned monitor: NMonitors = ' num2str(NMonitors) ', Set display monitor = [' num2str((monitor)) ']. Skipping monitors < 0']);
     monitor = monitor(monitor > 0);    
 end
 if max(monitor) > NMonitors
-    warning(['Can''t find assigned monitor: NMonitors = ' num2str(NMonitors) ', Set display monitor = [' num2str((monitor)) ']. Skipping monitors > ' num2str(NMonitors)])
+    warning(['Can''t find assigned monitor: NMonitors = ' num2str(NMonitors) ', Set display monitor = [' num2str((monitor)) ']. Skipping monitors > ' num2str(NMonitors)]);
     monitor = monitor(monitor <= NMonitors);
 end
 if isempty(monitor)
-    error('Assign a correct monitor')
+    error('Assign a correct monitor');
 end
 
 UsedMonitorExtends = MonitorExtends(monitor, :);
