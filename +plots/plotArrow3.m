@@ -1,4 +1,4 @@
-function h = mArrow3(p1,p2,varargin)
+function h = plotArrow3(p1,p2,varargin)
 %mArrow3 - plot a 3D arrow as patch object (cylinder+cone)
 % Source mArrow3.m - easy-to-use 3D arrow Georg Stillfried 
 % https://www.mathworks.com/matlabcentral/fileexchange/25372-marrow3-m-easy-to-use-3d-arrow?s_tid=srchtitle.
@@ -141,6 +141,6 @@ for propno = 1:numel(propertyNames)
     try
         set(h,propertyNames{propno},propertyValues{propno});
     catch
-        disp(lasterr)
+        disp(lasterr);
     end
 end

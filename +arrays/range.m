@@ -16,6 +16,9 @@ function [array, info] = range(start_point, end_point, options)
     % ⋘────────── Options for inclusion of endpoints ──────────⋙
     options.includeStart (1, 1) logical = true;
     options.includeEnd (1, 1) logical = true;
+
+    % ⋘──────── Behavior options ────────⋙
+    % options.step_size_behavior = "stretch" | "shrink" | "rigid";
   end % End of Input arguments block
   
   arguments(Output)
