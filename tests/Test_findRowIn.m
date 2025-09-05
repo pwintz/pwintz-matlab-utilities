@@ -45,13 +45,13 @@ end % End static methods block
   % ╰───────────────────────────────────╯
   methods (Test)
   function test_arrayWithSingleRow_noMatch(testCase)
-    expected_row = double.empty(1, 0);
-    testCase.assertEqual(pwintz.arrays.findRowIn([0, 5, 230], [1, 2, 3]), expected_row);
+    expected_row_ndxs = double.empty(0, 1);
+    testCase.assertEqual(pwintz.arrays.findRowIn([0, 5, 230], [1, 2, 3]), expected_row_ndxs);
   end % End of function.
 
     function test_arrayWithSingleRow_oneMatch(testCase)
-      expected_row = 1;
-      testCase.assertEqual(pwintz.arrays.findRowIn([1, 2, 3], [1, 2, 3]), expected_row);
+      expected_row_ndxs = 1;
+      testCase.assertEqual(pwintz.arrays.findRowIn([1, 2, 3], [1, 2, 3]), expected_row_ndxs);
     end % End of function.
 
     function test_arrayWithMultipleRow_noMatch(testCase)
@@ -62,7 +62,7 @@ end % End static methods block
       ];
       
       % ⋘────────── Execute and Verify ──────────⋙
-      expected_ndxs = double.empty(1, 0);
+      expected_ndxs = double.empty(0, 1);
       testCase.assertEqual(pwintz.arrays.findRowIn([0, 0, 0], array), expected_ndxs);
     end % End of function.
 
@@ -87,7 +87,7 @@ end % End static methods block
       ];
       
       % ⋘────────── Execute and Verify ──────────⋙
-      expected_row_ndxs = [1, 3];
+      expected_row_ndxs = [1; 3];
       testCase.assertEqual(pwintz.arrays.findRowIn([1, 2, 3], array), expected_row_ndxs);
     end % End of function.
 

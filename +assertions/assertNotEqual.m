@@ -36,10 +36,10 @@ function assertNotEqual(v1, v2, options)
 
     reasons = options.reason;
     if ~sizes_OK
-        reasons(end+1) = sprintf("Size mismatch:  size(%s) = %s and size(%s) = %s.", v1_name, mat2str(size(v1)), v2_name, mat2str(size(v2)))
+        reasons(end+1) = sprintf("Size mismatch:  size(%s) = %s and size(%s) = %s.", v1_name, mat2str(size(v1)), v2_name, mat2str(size(v2)));
     end
     if ~types_OK
-        reasons(end+1) = sprintf("Type mismatch:  class(%s) = %s and class(%s) = %s", v1_name, class(v1), v2_name, class(v2))
+        reasons(end+1) = sprintf("Type mismatch:  class(%s) = %s and class(%s) = %s", v1_name, class(v1), v2_name, class(v2));
     end
     if ~values_OK
       if isnumeric(v1) || islogical(v1)

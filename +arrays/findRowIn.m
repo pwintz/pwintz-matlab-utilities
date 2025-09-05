@@ -1,5 +1,6 @@
 function row_ndxs = findRowIn(row_vector, array, options)
-  % pwintz.arrays.findRowIn : For a given row vector, find the indices of all rows in array that are equal to the given row. The row indices are returned as a row vector. If there are no matches, then an empty array is returned.
+  % pwintz.arrays.findRowIn : For a given row vector, find the indices of all rows in array that are equal to the given row. The row indices are returned as a column vector. If there are no matches, then an empty array is returned.
+  % ` runtests Test_findRowIn
   arguments(Input)
     row_vector (1, :);
     array      (:, :);
@@ -8,11 +9,11 @@ function row_ndxs = findRowIn(row_vector, array, options)
   end % End of Input arguments block
   
   arguments(Output)
-    row_ndxs (1, :);
+    row_ndxs (:, 1);
   end % End of Output arguments block
   
-  % assert(isrow(row_vector), '"row_vector" must be a row vector (shocking, I know). If you want to find multiple rows, use "pwintz.arrays.findRowsIn" instead.');
-  assert(size(row_vector, 2) == size(array, 2), 'The width of row_vector must match the width the array. The height of col_vector is %s and the height of array is %s.', mat2str(size(row_vector)), mat2str(size(array)));
+  % Check dimensions.
+  pwintz.assertions.assertSameNumColumns(row_vector, array);
 
   % We use "ismembertol" instead of "ismember" because "ismember" only returns one index. In the furture, we might also allow for nonzero tolerances, but this is not yet implemented.
   [~, row_ndxs] = ismembertol(...
@@ -24,9 +25,13 @@ function row_ndxs = findRowIn(row_vector, array, options)
   );
 
   % Convert row_ndxs into an array;
-  row_ndxs = cell2mat(row_ndxs);
-  if row_ndxs == 0
-    row_ndxs = [];
+  if iscell(row_ndxs)
+    row_ndxs = cell2mat(row_ndxs);
+  end
+  if numel(row_ndxs) == 1 && row_ndxs == 0
+    row_ndxs = double.empty(0, 1);
+  % else
+  %   error("findRowIn(): Unexpected case: row_vector=%s, array=%s, row_ndxs=%s", mat2str(row_vector), mat2str(array), mat2str(row_ndxs) )
   end
 
   if options.verbose

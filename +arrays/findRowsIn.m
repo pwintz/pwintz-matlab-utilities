@@ -1,25 +1,31 @@
-function row_ndxs = findRowsIn(row_vectors, array)
-  % pwintz.arrays.findRowsIn : Find the row indices of all rows in array that are equal to the given row vector. The row indices are returned as a column vector. If there are no matches, then an empty array is returned.
-  % assert(isrow(row_vectors), '"row_vectors" must be a row vector (shocking, I know).');
-
+function row_ndxs = findRowsIn(row_vectors, array, options)
+  % pwintz.arrays.findRowsIn: For each row in "row_vectors", find the rows in "array" that are equal (up to an optional tolerance). The return value is an nx1 cell array where n is the number of rows in "row_vectors". Each ith entry in the output has the indices of the rows in "array" that are equal to row_vectors(i, :). The each entry in the returned cell array is a (possibly empty) column vector. 
   arguments(Input)
-  row_vectors (:, :);
-  array       (:, :);
+    row_vectors (:, :) {mustBeFloat};
+    array       (:, :) {mustBeFloat};
+    options.tolerance (1, 1) {mustBeNonnegative} = 0.0;
+    % options.verbose (1, 1) logical = false;
   end % End of Input arguments block
   
   arguments(Output)
     row_ndxs (:, 1) cell;
   end % End of Output arguments block
   
-  warning("findRowsIn:ID","pwintz.arrays.findRowsIn has not been tested. Did you mean to use pwintz.arrays.findRowIn?");
+  pwintz.assertions.assertSameNumColumns(row_vectors, array);
 
-  assert(size(row_vectors, 2) == size(array, 2), 'The width of the arrays must match.');
+  % We use "ismembertol" instead of "ismember" because "ismember" only returns one index. 
+  [~, row_ndxs] = ismembertol(row_vectors, array, ...
+    options.tolerance, ... 
+    "ByRows", true, ...
+    "OutputAllIndices", true, ...
+    'DataScale', 1 ... % Use absolute tolerance instead of relative.
+  );
 
-  % We use "ismembertol" instead of "ismember" because "ismember" only returns one index. In the furture, we might also allow for nonzero tolerances, but this is not yet implemented.
-  tolerance = 0.0;
-  [~, row_ndxs] = ismembertol(row_vectors, array, tolerance, "ByRows", true, "OutputAllIndices", true);
-
-  if row_ndxs == 0
-    row_ndxs = {};
+  % Make it so the output is always a cell array. 
+  % if iscell(row_ndxs)
+  for i = pwintz.arrays.cellVectorIndices(row_ndxs)
+    if isequal(row_ndxs{i}, 0)
+      row_ndxs{i} = double.empty(1, 0);
+    end
   end
 end % end function
