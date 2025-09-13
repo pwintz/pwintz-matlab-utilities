@@ -8,7 +8,7 @@ function plot_handle = plotVector2(vectors, options)
   end % End of Output arguments block
   
   arguments(Input)
-    options.plotArgs cell;
+    options.plotArgs cell = {};
   end % End of Input arguments
   
   switch numel(vectors)

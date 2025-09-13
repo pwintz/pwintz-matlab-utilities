@@ -1,4 +1,5 @@
 function assertUnique(array, options)
+  % Assert that every entry in "array" is uniue. 
   arguments(Input)
     array (:, :) double;
     options.tolerance (1, 1) double = 0.0;

@@ -5,8 +5,10 @@ function ndxs = cellVectorIndices(cell_array)
   % `     ele = my_array(ndx)
   % `  end 
 
-  assert(iscell(cell_array), "Expected cell_array to be a cell array. Instead its type was %s.", cell(cell_array));
-  assert(isvector(cell_array), "Expected cell_array to be 1-dimensional. Instead its size was %s.", mat2str(size(cell_array)));
+  if ~iscell(cell_array)
+    error(pwintz.strings.format("Expected ""cell_array"" to be a cell array. Instead its type was %s.", class(cell_array)));
+  end
+  assert(isvector(cell_array), "Expected ""cell_array"" to be 1-dimensional. Instead its size was %s.", mat2str(size(cell_array)));
   ndxs = 1:numel(cell_array);
 
 end % end function

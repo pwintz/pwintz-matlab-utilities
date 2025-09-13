@@ -6,6 +6,8 @@ function assertEqual(v1, v2, options)
         options.ignoreTypes logical = true;
         options.ignoreSizes logical = false;
         options.errorID string = "assertEqual:FAILED";
+        options.leftName string = "";
+        options.rightName string = "";
     end % End of Input arguments block
     
     if options.ignoreSizes
@@ -22,14 +24,27 @@ function assertEqual(v1, v2, options)
     % We put all of the slower operations inside the following if-block, running them only if one of the checks fails.
     if ~sizes_OK || ~types_OK || ~values_OK
         % ⋘──────── Construct names for the arguments ────────⋙
-        v1_name = inputname(1);
-        v2_name = inputname(2);
-        % The input names may be empty, if the caller passed an expression instead of a single variable.
-        if isempty(v1_name)
-            v1_name = "<left>";
+        % Generate a name for the left argument.
+        v1_name = options.leftName; 
+        if v1_name == ""
+          v1_name = inputname(1);
         end
-        if isempty(v2_name)
-            v2_name = "<right>";
+        % The input names may be empty, if the caller passed an expression instead of a single variable.
+        if v1_name == "" || isempty(v1_name)
+            v1_name = "<left>";
+        else 
+          v1_name = """" + v1_name + """";
+        end
+        % Generate a name for the right argument.
+        v2_name = options.rightName; 
+        if v2_name == ""
+          v2_name = inputname(2);
+        end
+        % The input names may be empty, if the caller passed an expression instead of a single variable.
+        if v2_name == "" || isempty(v2_name)
+            v2_name = "<left>";
+        else 
+          v2_name = """" + v2_name + """";
         end
 
         reasons = options.reason;

@@ -19,7 +19,7 @@ function diff_array = angleDiffCCW(angle_array, options)
 
   diff_array(diff_array < 0) = diff_array(diff_array < 0) + 2*pi;
 
-  assert(all(diff_array >= 0))
+  assert(all(diff_array >= 0));
 
   % ╭───────────────────────────────────────────────────╮
   % │             Handle Optional Arguments             │

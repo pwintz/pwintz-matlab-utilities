@@ -1,6 +1,6 @@
 function result = mapRows(map_function, input_arrays)
   % pwintz.arrays.mapRows: For a given row vector, find the indices of all rows in array that are equal to the given row. The row indices are returned as a column vector. If there are no matches, then an empty array is returned.
-  % ` runtests Test_mapRows
+  % TODO: ` runtests Test_mapRows
   arguments(Input)
     map_function function_handle;
   end % End of Input arguments block
@@ -23,10 +23,11 @@ function result = mapRows(map_function, input_arrays)
   out_cell = cell(n_rows, 1);
   for row = 1:n_rows
     row_of_each_input_arrays = cellfun(@(array) array(row, :), input_arrays, "UniformOutput", false);
+
     out_cell{row} = map_function(row_of_each_input_arrays{:});
-    if ~isdouble(out_cell{row})
-      warning("Output of the map_function handle\n\n%s\nis not a double. It might not be convertable to a matrix.", formattedDisplayText(map_function))
-    end % End of if block.
+    % if ~isdouble(out_cell{row}) && ~isstring(out_cell{row}) && ~ischar(out_cell{row})
+    %   warning("Output of the map_function handle\n\n%s\nis not a %s instead of a double, string, or char. It might not be convertable to a matrix.", formattedDisplayText(map_function), class(out_cell{row}))
+    % end % End of if block.
     assert(isrow(out_cell{row}), "The output of the map_function must be a row vector. Instead its size was %s", mat2str(size(out_cell{row})));
   end 
 
@@ -34,7 +35,7 @@ function result = mapRows(map_function, input_arrays)
   % │             Convert from a cell array to an array.             │
   % ╰────────────────────────────────────────────────────────────────╯
   try
-    result = [out_cell{:}]; 
+    result = [out_cell{:}]'; % Transpose to make into column vector.
     % if iscell(out_cell{1})
     %   out_cell = cellfun(@(entry) entry, out_cell, "UniformOutput", false);
     % end

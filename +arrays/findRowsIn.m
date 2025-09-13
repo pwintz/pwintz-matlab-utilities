@@ -21,8 +21,7 @@ function row_ndxs = findRowsIn(row_vectors, array, options)
     'DataScale', 1 ... % Use absolute tolerance instead of relative.
   );
 
-  % Make it so the output is always a cell array. 
-  % if iscell(row_ndxs)
+  % Change any entries in col_ndx that are "0" (indicating no matches) to an empty array. 
   for i = pwintz.arrays.cellVectorIndices(row_ndxs)
     if isequal(row_ndxs{i}, 0)
       row_ndxs{i} = double.empty(1, 0);

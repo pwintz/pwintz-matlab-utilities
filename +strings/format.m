@@ -39,6 +39,8 @@ function out_string = format(format_string, values)
         if isscalar(value) && ~iscell(value)
           % Use default formatter.
           fmt_out(i_fmt) = sprintf(fmt, value);
+        elseif ischar(value)
+          fmt_out(i_fmt) = sprintf(fmt, value);
         else % If an array, map each element using the given format.
           % formatter = @(entry) strip(formattedDisplayText(entry));
           fmt_out(i_fmt) = pwintz.strings.fmat2str(@entry2str, value);
@@ -53,11 +55,18 @@ function out_string = format(format_string, values)
         else % If an array, map each element using the given format.
           fmt_out(i_fmt) = pwintz.strings.fmat2str(fmt, value);
         end
-
     end
-
   end
   out_string = regexprep(format_string, regex_expression, fmt_out, "once");
+  out_string = sprintf(out_string); % Handles escaped characters, like "\n".
+
+  if nargout == 0
+      % If the output is not being assigned to a variable, then print it.
+      disp(out_string);
+
+      % Clear the output variable to prevent it from being printed again. 
+      clearvars out_string;
+  end
 
 end % end function
 

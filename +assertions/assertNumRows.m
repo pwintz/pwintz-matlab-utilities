@@ -1,7 +1,7 @@
 function assertNumRows(array, n_rows, context, options)
   arguments(Input)
     array (:, :);
-    n_rows (1, 1) {pwintz.validators.mustBeIndexScalar};
+    n_rows (1, 1) {mustBeNonnegative,mustBeInteger};
     context      (1, 1) string = "";
     options.name (1, 1) string = "";
   end % End of Input arguments block
@@ -20,8 +20,8 @@ function assertNumRows(array, n_rows, context, options)
     if context ~= ""
       message = sprintf("%s\nContext: %s", message, context);
     end
-    error_ID = "ARRAY_SIZE:WRONG_NUM_ROWS";
+    error_ID = "PWINTZ:ASSERT_NUM_ROWS";
     error = MException(error_ID, message);
-    throwAsCaller(error);
+    throw(error);
   end
 end

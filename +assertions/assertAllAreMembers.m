@@ -1,7 +1,7 @@
 function assertAllAreMembers(values, array, options)
   arguments(Input)
-    values (:, :) double;
-    array (:, :) double;
+    values (1, :) double;
+    array (1, :) double;
     options.tolerance (1, 1) double = 0.0;
   end % End of Input arguments block
 
