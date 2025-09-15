@@ -32,6 +32,6 @@ function assertSameNumRows(left_array, right_array, options)
     end
 
     error = MException("PWINTZ:ASSERT_SAME_NUM_ROWS", "Expected size(%s)=%s to have the same number of rows as size(%s)=%s", left_array_name, mat2str(size(left_array)), right_array_name, mat2str(size(right_array)));
-    throwAsCaller(error);
+    throw(error);
   end
 end % end function

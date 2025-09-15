@@ -21,13 +21,19 @@ function out_string = format(format_string, values)
     values;
   end % End of Input arguments block
   
-  regex_expression = '(?<!%)%.*?[diuoxXfeEgGcsz]';
+  regex_expression = '(?<!%)%.*?[diuoxXfeEgGcszD]';
   replacement_fmts = extract(format_string, regexpPattern(regex_expression))';
   % [fmt_start_ndxs, fmt_end_ndxs] = regexp(format_string, regex_expression);
   
   n_fmts = numel(replacement_fmts);
+  n_values = size(values, 2);
   % TODO: Improve error string when number of values don't match the number of specifications.
-  pwintz.assertions.assertNumColumns(values, n_fmts);
+
+  if n_values ~= n_fmts
+    error("The number of values given (%d) does not match the number of format specifications (%d)", n_values, n_fmts)
+  end
+  % Don't use "assertNumColumns" because that 
+  % pwintz.assertions.assertNumColumns(values, n_fmts);
 
   fmt_out = strings(n_fmts, 1);
   for i_fmt = 1:n_fmts
@@ -36,20 +42,38 @@ function out_string = format(format_string, values)
     last_char = extract(fmt, strlength(fmt));
     switch last_char
       case "s"
-        if isscalar(value) && ~iscell(value)
-          % Use default formatter.
-          fmt_out(i_fmt) = sprintf(fmt, value);
+
+        if isempty(value) % && ~(ischar(value) && ~isstring(value))
+          
+          fmt_out(i_fmt) = empty2str(value);
+        elseif isscalar(value) && ~iscell(value)
+          if isnumeric(value)
+            % If we pass a number to the default %s format template, then the output is either " " (for value=0) or an empty strings (for other values). 
+            fmt_out(i_fmt) = num2str(value);
+          else
+            % Use default formatter.
+            fmt_out(i_fmt) = sprintf(fmt, value);
+          end
         elseif ischar(value)
           fmt_out(i_fmt) = sprintf(fmt, value);
         else % If an array, map each element using the given format.
           % formatter = @(entry) strip(formattedDisplayText(entry));
           fmt_out(i_fmt) = pwintz.strings.fmat2str(@entry2str, value);
         end
-
+      case "D" % "display" output
+        if isempty(value)
+          % formattedDisplayText ddoesn't show empty values, so we use our own
+          fmt_out(i_fmt) = empty2str(value);
+        else
+          % We don't trim the white space because many displays are printed with space before each line.
+          fmt_out(i_fmt) = "\n" + formattedDisplayText(value, SuppressMarkup=true);
+        end
       case "z" % "Size" output
         fmt_out(i_fmt) = size2str(value);
       otherwise
-        if isscalar(value)
+        if iscell(value)
+          fmt_out(i_fmt) = pwintz.strings.fmat2str(fmt, value);
+        elseif isscalar(value)
           % Use default formatter.
           fmt_out(i_fmt) = sprintf(fmt, value);
         else % If an array, map each element using the given format.
@@ -82,4 +106,8 @@ end % end function
 function str = size2str(array)
   size_strings = arrayfun(@(sz) sprintf("%d", sz), size(array));
   str = join(size_strings, "x");
+end
+
+function str = empty2str(value)
+  str = sprintf("%s.empty(%s)", class(value), size2str(value));
 end

@@ -55,6 +55,6 @@ function assertNotEqual(v1, v2, options)
       reasons(end+1) = sprintf("Value match: %s = %s and %s = %s are equal.", v1_name, v1_str, v2_name, v2_str)
     end
     exception = MException(options.errorID, "%s and %s are equal or their type/sizes are mismatched.\n\t%s", v1_name, v2_name, join(reasons, sprintf("\n\t")));
-    throwAsCaller(exception);
+    throw(exception);
   end
 end

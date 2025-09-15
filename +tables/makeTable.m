@@ -1,9 +1,9 @@
 function out = makeTable(columnName, columnValues, options)
-
+  % ` runtests Test_makeTable
 
   arguments(Input,Repeating)
-    columnName (1, :) char;
-    columnValues (:, :) ;
+    columnName (1, 1) string;
+    columnValues (:, :);
   end % End of Input arguments block
 
   arguments(Input)
@@ -26,15 +26,21 @@ function out = makeTable(columnName, columnValues, options)
   %   
   % end
 
+  % ╭──────────────────────────────────────────────────────────╮
+  % │             Check the lengths of each column             │
+  % ╰──────────────────────────────────────────────────────────╯
   if ~are_all_columns_same_length
     for i_col = 1:num_cols
-      col = columnValues{i_col};
-      if size(col, 1) ~= num_rows
-        error("Column ""%s"" did not have the expected number of rows. Instead of %d rows it had %d", columnName{i_col}, num_rows, size(col, 1));
+      column = columnValues{i_col};
+      if size(column, 1) ~= num_rows
+        err = pwintz.Exception("pwintz:makeTable", "Column ""%s"" (%z) did not have the expected number of rows. Instead of %d rows it had %d.\n%D", columnName{i_col}, column, num_rows, size(column, 1), column);
+        throw(err);
       end
     end
   end
   
+  columnName = cellfun(@(str) char(str), columnName, "UniformOutput", false);
+  assert(isvector(columnName), "columnName must be a vector.");
   out = table(columnValues{:}, 'VariableNames', columnName);
 
 end % end function

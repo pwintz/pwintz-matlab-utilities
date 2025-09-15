@@ -7,7 +7,7 @@ function assertAlmostEqual(v1, v2)
         % inequal_ndxs = find(error > tol);
         msg = pwintz.strings.format('The error between %g and %g was %g > %g.', v1, v2, error_val, tol);
         exception = MException("PWINTZ:assertAlmostEqual", msg);
-        throwAsCaller(exception);
+        throw(exception);
     end
 
 end

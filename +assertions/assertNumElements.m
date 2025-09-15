@@ -1,8 +1,8 @@
-function assertNumColumns(array, n_cols, context, contex_args, options)
+function assertNumElements(array, n_elements, context, contex_args, options)
   % See also assertNumRows, assertSize, assertSameNumColumns, assertSameNumRows, assertSameSize
   arguments(Input)
     array (:, :);
-    n_cols (1, 1) {mustBeNonnegative,mustBeInteger};
+    n_elements (1, 1) {mustBeNonnegative,mustBeInteger};
     context      (1, 1) string = "";
   end % End of Input arguments block
 
@@ -14,7 +14,7 @@ function assertNumColumns(array, n_cols, context, contex_args, options)
     options.name (1, 1) string = "";
   end % End of Input arguments block
 
-  if size(array, 2) ~= n_cols
+  if size(array, 2) ~= n_elements
     array_name = options.name; 
     if array_name == ""
       array_name = inputname(1);
@@ -24,7 +24,7 @@ function assertNumColumns(array, n_cols, context, contex_args, options)
       end
     end
 
-    message = pwintz.strings.format("Error: %s (%z) must have %d columns, but instead had %d: %D", array_name, array, n_cols, size(array, 2), array);
+    message = pwintz.strings.format("Error: %s (%z) must have %d elements, but instead had %d.", array_name, array, n_elements, numel(array));
     if context ~= ""
       context = pwintz.strings.format(context, contex_args{:});
       message = sprintf("%s\nContext: %s", message, context);
