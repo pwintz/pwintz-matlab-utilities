@@ -11,6 +11,7 @@ function plotLinearVectorField(A, plot_args, options)
     options.offset = [0; 0];
     options.xRange = [-2, 2];
     options.yRange = [-2, 2];
+    options.Color = [0.2, 0.2, 0.6];
   end % End of Input arguments block
 
   % plotLinearVectorField - Given a 2x2 matrix A, plot the vector field in 2D.
@@ -28,5 +29,5 @@ function plotLinearVectorField(A, plot_args, options)
   % Reshape
   p1 = reshape(p(1,:), size(x1));
   p2 = reshape(p(2,:), size(x1));
-  quiver(x1,x2,p1,p2, plot_args{:});
+  quiver(x1,x2,p1,p2, "Color", options.Color, plot_args{:});
 end

@@ -1,4 +1,4 @@
-classdef PWintzTestCase < matlab.unittest.TestCase
+classdef TestCase < matlab.unittest.TestCase
   
   methods
 
