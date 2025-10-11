@@ -29,7 +29,7 @@ function assertAll(values, context, context_args, options)
       context = "\nContext:\n" + pwintz.strings.format(context, context_args{:});
     end
 
-    error = pwintz.Exception("pwintz:assertAll", "Some of the values %s = \n%D were false at indice(s) %d.%s", name, values, find(~values), context);
+    error = pwintz.Exception("pwintz:assertAll", "Some of the values %s = \n%D were false. The indices of the false values are %d.%s", name, values, find(~values), context);
     throw(error);
   end
 end % end function

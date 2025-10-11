@@ -10,8 +10,8 @@ function assertAllLessThanOrEqual(left, right, context, context_args, options)
   end % End of Input arguments block
   
   arguments(Input)
-    options.leftName = [];
-    options.rightName = [];
+    options.leftName = "";
+    options.rightName = "";
     options.tolerance = 0;
   end % End of Input arguments block
 
@@ -22,7 +22,7 @@ function assertAllLessThanOrEqual(left, right, context, context_args, options)
     % │             Generate the "name" for the left argument.             │
     % ╰────────────────────────────────────────────────────────────────────╯
     left_name = options.leftName; 
-    if isempty(left_name)% Check if no left name given. 
+    if left_name == "" % Check if no left name given. 
       left_name = inputname(1);
       % The input names may be empty, if the caller passed an expression instead of a single variable.
       if isempty(left_name)
@@ -34,7 +34,7 @@ function assertAllLessThanOrEqual(left, right, context, context_args, options)
     % │             Generate the "name" for the right argument.            │
     % ╰────────────────────────────────────────────────────────────────────╯
     right_name = options.rightName; 
-    if isempty(right_name)% Check if no right name given.
+    if right_name == "" % Check if no right name given.
       right_name = inputname(2);
       % The input names may be empty, if the caller passed an expression instead of a single variable.
       if isempty(right_name)

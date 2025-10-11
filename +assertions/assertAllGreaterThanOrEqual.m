@@ -42,7 +42,7 @@ function assertAllGreaterThanOrEqual(left, right, context, context_args, options
       end
     end
     
-    error = pwintz.Exception("pwintz:assertAllGreaterThanOrEqual", "%s=%s was greater than %s=%s at indices %d", left_name, left, right_name, right, find(~is_geq));
+    error = pwintz.Exception("pwintz:assertAllGreaterThanOrEqual", "Assertion failed: %s=%s was not greater than or equal to %s=%s at indices %d", left_name, left, right_name, right, find(~is_geq));
     throw(error);
   end
 end % end function

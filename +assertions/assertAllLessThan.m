@@ -15,7 +15,7 @@ function assertAllLessThan(left, right, context, context_args, options)
     % options.tolerance = 0;
   end % End of Input arguments block
 
-  is_less_than = left <right; % + options.tolerance;
+  is_less_than = left < right; % + options.tolerance;
 
   if ~all(is_less_than, "all")
     % ╭────────────────────────────────────────────────────────────────────╮

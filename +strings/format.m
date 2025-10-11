@@ -62,7 +62,7 @@ function out_string = format(format_string, values)
         end
       case "D" % "display" output
         if isempty(value)
-          % formattedDisplayText ddoesn't show empty values, so we use our own
+          % formattedDisplayText doesn't show empty values, so we use our own
           fmt_out(i_fmt) = empty2str(value);
         else
           % We don't trim the white space because many displays are printed with space before each line.

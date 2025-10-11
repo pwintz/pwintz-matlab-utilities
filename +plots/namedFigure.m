@@ -16,7 +16,7 @@ function fig = namedFigure(name)
     if isempty(fig)
         % If the figure does not exist, create a new one
         fig = figure();
-        set(fig, 'Name', name, NumberTitle='off');
+        set(fig, 'Name', name, NumberTitle='off', Theme="light");
     else
         % If the figure exists, make it the current figure
         figure(fig);
